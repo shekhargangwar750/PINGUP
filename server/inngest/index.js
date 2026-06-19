@@ -3,6 +3,7 @@ import User from "../models/User.js";
 import Connection from "../models/Connection.js";
 import sendEmail from "../config/nodeMailer.js";
 import Message from "../models/Message.js";
+import Story from "../models/Story.js";
 
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "pingup-app" });
@@ -176,8 +177,9 @@ const sendNotificationOfUnseenMessages=inngest.createFunction({
         body
        })
 
-      return {message:"Notification sent"}
+    
    }
+     return {message:"Notification sent"}
  }
 )
 
