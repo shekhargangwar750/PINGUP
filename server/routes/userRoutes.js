@@ -6,7 +6,7 @@ import { updateUserData,getUserData,discoverUsers,followUser,unfollowUser,sendCo
 import { protect } from '../middlewares/auth.js';
 import { upload } from '../config/multer.js';
 import { getUserProfiles } from '../controllers/postController.js';
-import { getUserRecentMessages } from '../controllers/MessageController.js';
+import { getUserRecentMessages } from '../controllers/messageController.js';
 const userRouter= express.Router();
 
 userRouter.get('/data',(req,res)=>{
