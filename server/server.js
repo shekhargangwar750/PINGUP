@@ -3,7 +3,7 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
-// import connectDB from './config/db.js';
+import connectDB from './config/db.js';
 import { inngest,functions } from './inngest/index.js';
 import {serve} from 'inngest/express'
 import { clerkMiddleware } from '@clerk/express'
@@ -13,7 +13,7 @@ import { clerkMiddleware } from '@clerk/express'
 // import messageRouter from './routes/messageRoutes.js';
 
 const app=express();
-// await connectDB();
+await connectDB();
 
 app.use(express.json());
 app.use(cors());
