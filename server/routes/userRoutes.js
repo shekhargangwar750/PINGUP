@@ -1,7 +1,7 @@
 import express from 'express'
 // import { acceptConnectionRequest, discoverUsers, followUser, getUserConnections, getUserData, sendConnectionRequest, unfollowUser, updateUserData } from '../controllers/userControlller.js';
 
-import { updateUserData } from '../controllers/userControlller.js';
+import { updateUserData,getUserData} from '../controllers/userControlller.js';
 
 import { protect } from '../middlewares/auth.js';
 import { upload } from '../config/multer.js';
@@ -13,7 +13,7 @@ userRouter.get('/data',(req,res)=>{
   res.send('ok')
 })
 
-// userRouter.get('/data',protect,getUserData)
+userRouter.get('/data',protect,getUserData)
 
 userRouter.post('/update',upload.fields([{name:'profile',maxCount:1},{name:'cover',maxCount:1}]),protect,updateUserData)
 
