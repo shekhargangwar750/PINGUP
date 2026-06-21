@@ -8,9 +8,9 @@ import { getUserProfiles } from '../controllers/postController.js';
 import { getUserRecentMessages } from '../controllers/messageController.js';
 const userRouter= express.Router();
 
-userRouter.get('/data',(req,res)=>{
-  res.send('ok')
-})
+// userRouter.get('/data',(req,res)=>{
+//   res.send('ok')
+// })
 
 userRouter.get('/data',protect,getUserData)
 
