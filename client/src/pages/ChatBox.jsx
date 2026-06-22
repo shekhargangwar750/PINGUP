@@ -27,7 +27,7 @@ function ChatBox() {
   const fetchUserMessages = async () => {
     try {
       const token = await getToken();
-      dispatch(fetchMessages({token,userId}));
+      dispatch(fetchMessages({ token, userId }));
     } catch (error) {
       toast.error(error.message);
     }
@@ -46,6 +46,7 @@ function ChatBox() {
       const { data } = await api.post("/api/message/send", formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      console.log(data);
       if (data.success) {
         setText("");
         setImage(null);
@@ -104,11 +105,12 @@ function ChatBox() {
                   <div
                     className={`p-2 text-sm max-w-sm bg-white text-slate-700 rounded-lg shadow ${message.to_user_id !== user._id ? "rounded-bl-none" : "rounded-br-none"}`}
                   >
-                    {message.message_type === "image" && (
+                    {/* {console.log(message.media_url)} */}
+                    {message.media_url && (
                       <img
                         src={message.media_url}
                         alt=""
-                        className="w-full max-w-sm rounded-lg mb-1"
+                        className="w-auto max-w-37.5 max-h-50 rounded-lg  object-cover"
                       />
                     )}
 
@@ -145,7 +147,10 @@ function ChatBox() {
                 onChange={(e) => setImage(e.target.files[0])}
               />
             </label>
-            <button onClick={sendMessage} className="bg-linear-to-br from-indigo-500 to-purple-600 hover:from-indigo-700 hover:to-purple-800 active:scale-95 cursor-pointer text-white p-2 rounded-full">
+            <button
+              onClick={sendMessage}
+              className="bg-linear-to-br from-indigo-500 to-purple-600 hover:from-indigo-700 hover:to-purple-800 active:scale-95 cursor-pointer text-white p-2 rounded-full"
+            >
               <SendHorizonal size={18} />
             </button>
           </div>
