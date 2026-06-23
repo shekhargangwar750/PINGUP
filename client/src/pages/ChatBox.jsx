@@ -85,7 +85,7 @@ function ChatBox() {
           <img
             src={user.profile_picture}
             alt=""
-            className="size-8 rounded-full"
+            className="size-8 rounded-full object-cover"
           />
           <div>
             <p className="font-medium">{user.full_name}</p>

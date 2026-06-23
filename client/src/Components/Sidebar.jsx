@@ -3,13 +3,14 @@ import { assets, dummyUserData } from "../assets/assets";
 import { Link, useNavigate } from "react-router-dom";
 import MenuItems from "./MenuItems";
 import { CirclePlus, LogOut } from "lucide-react";
-import { UserButton, useClerk } from "@clerk/react";
+import { UserButton, useClerk, useUser } from "@clerk/react";
 import { useSelector } from "react-redux";
 
 function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const navigate = useNavigate();
+  // const { user} = useUser();
   // const user = dummyUserData;
-   const user = useSelector((state)=>state.user.value);
+  const user = useSelector((state) => state.user.value);
   const { signOut } = useClerk();
   return (
     <div
@@ -34,10 +35,20 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
       </div>
       <div className="w-full border-t border-gray-200 p-4 px-7 flex items-center justify-between">
         <div className="flex gap-2 items-center cursor-pointer">
-          <UserButton />
+          <div className="relative w-10 h-10">
+            <img
+              src={user?.profile_picture}
+              alt="Profile"
+              className="absolute inset-0 w-full h-full rounded-full object-cover"
+            />
+
+            <div className="absolute inset-0 opacity-0">
+              <UserButton />
+            </div>
+          </div>
           <div>
             <h1 className="text-sm font-medium">{user.full_name}</h1>
-            <p className="text-xs texxt-gray-500">@{user.username}</p>
+            <p className="text-xs text-gray-500">@{user.username}</p>
           </div>
         </div>
         <LogOut

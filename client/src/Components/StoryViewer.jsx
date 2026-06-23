@@ -1,38 +1,64 @@
-import { BadgeCheck, X } from "lucide-react";
+import { BadgeCheck, MoreHorizontal, Trash2, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+import api from "../api/axios";
+import { useAuth } from "@clerk/react";
 
 function StoryViewer({ viewStory, setViewStory }) {
+  const { getToken } = useAuth();
+  const currentUser = useSelector((state) => state.user.value);
+  const [progress, setProgress] = useState(0);
+  const [showMenu, setShowMenu] = useState(false);
 
- const [progress,setProgress]=useState(0);
+  const handleDeleteStory = async (storyId) => {
+    try {
+      const token = await getToken();
+      const { data } = await api.delete(`/api/story/delete/${storyId}`, {
+        headers: {
+          Authorization: `Bearer ${await getToken()}`,
+        },
+      });
 
- useEffect(()=>{
-  let timer,progressInterval;
-  if(viewStory && viewStory.media_type!=='video'){
-    setProgress(0)
-    const duration=10000;
-    const setTime=100;
-    let elapsed=0;
-   progressInterval= setInterval(() => {
-      elapsed+=setTime;
-      setProgress((elapsed/duration)*100)
-    }, setTime);
-    // close story after duration(10-sec)
-    timer=setTimeout(() => {
-       setViewStory(null)
-    }, duration);
-  }
- return ()=>{
-  clearTimeout(timer)
-  clearInterval(progressInterval)
- }
+      if (data.success) {
+        toast.success("Story deleted");
+        setViewStory(null);
+        window.location.reload();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
- },[viewStory,setViewStory])
+  useEffect(() => {
+    let timer, progressInterval;
+    if (viewStory && viewStory.media_type !== "video") {
+      setProgress(0);
+      const duration = 10000;
+      const setTime = 100;
+      let elapsed = 0;
+      progressInterval = setInterval(() => {
+        elapsed += setTime;
+        setProgress((elapsed / duration) * 100);
+      }, setTime);
+      // close story after duration(10-sec)
+      timer = setTimeout(() => {
+        setViewStory(null);
+      }, duration);
+    }
+    return () => {
+      clearTimeout(timer);
+      clearInterval(progressInterval);
+    };
+  }, [viewStory, setViewStory]);
 
   const handleClose = () => {
     setViewStory(null);
   };
-  
-  if(!viewStory) return null
+
+  if (!viewStory) return null;
 
   const renderContent = () => {
     switch (viewStory.media_type) {
@@ -74,7 +100,7 @@ function StoryViewer({ viewStory, setViewStory }) {
       <div className="absolute top-0 left-0 w-full h-1 bg-gray-700">
         <div
           className="h-full bg-white transition-all duration-100 linear"
-          style={{ width:`${progress}%` }}
+          style={{ width: `${progress}%` }}
         ></div>
       </div>
       {/* User info-top left */}
@@ -90,6 +116,29 @@ function StoryViewer({ viewStory, setViewStory }) {
         </div>
       </div>
       {/* Close Button */}
+      {currentUser?._id === viewStory.user?._id && (
+        <div className="absolute top-4 right-16 z-50">
+          <MoreHorizontal
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowMenu(!showMenu);
+            }}
+            className="w-7 h-7 text-white cursor-pointer"
+          />
+
+          {showMenu && (
+            <div className="absolute right-0 mt-2 bg-white rounded-lg shadow-lg">
+              <button
+                onClick={() => handleDeleteStory(viewStory._id)}
+                className="flex items-center gap-2 px-4 py-2 text-red-500 hover:bg-gray-100"
+              >
+                <Trash2 className="w-4 h-4" />
+                Delete
+              </button>
+            </div>
+          )}
+        </div>
+      )}
       <button
         onClick={handleClose}
         className="absolute top-4 right-4 text-white text-3xl font-bold focus:outline-none"

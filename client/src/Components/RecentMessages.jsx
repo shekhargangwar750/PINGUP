@@ -17,6 +17,7 @@ function RecentMessages() {
       const { data } = await api.get("api/user/recent-messages", {
         headers: { Authorization: `Bearer ${token}` },
       });
+      // console.log(data.messages);
       if (data.success) {
         //group messages by sender and get the latest message for each sender
         const groupedMessages = data.messages.reduce((acc, message) => {
@@ -31,23 +32,26 @@ function RecentMessages() {
         }, {});
         //sort messages by date
         const sortedMessages = Object.values(
-          groupedMessages.sort(
+          groupedMessages).sort(
             (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
-          ),
-        );
+          )
+        ;
 
         setMessages(sortedMessages);
       } else {
         toast.error(data.message);
       }
-    } catch (error) {}
+    } catch (error) {
+      // console.log(error)
+      toast.error("Failed to fetch Messages")
+    }
   };
   useEffect(() => {
     if (user) {
       fetchRecentMessages();
-      setInterval(fetchRecentMessages, 30000);
+     const interval= setInterval(fetchRecentMessages, 30000);
       return () => {
-        clearInterval();
+        clearInterval(interval);
       };
     }
   }, [user]);
@@ -64,7 +68,7 @@ function RecentMessages() {
             <img
               src={message.from_user_id.profile_picture}
               alt=""
-              className="w-8 h-8 rounded-full"
+              className="w-8 h-8 rounded-full object-cover"
             />
             <div className="w-full">
               <div className="flex justify-between">

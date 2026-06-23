@@ -16,14 +16,14 @@ function Discover() {
   const [loading, setLoading] = useState(false);
   const { getToken } = useAuth();
 
-  const handleSearch = async (e) => {
-    if (e.key === "Enter") {
-      try {
+
+  const fetchUsers=async(search="")=>{
+    try {
         setUsers([]);
         setLoading(true);
         const { data } = await api.post(
           "/api/user/discover",
-          { input },
+          { input:search },
           {
             headers: { Authorization: `Bearer ${await getToken()}` },
           },
@@ -33,12 +33,21 @@ function Discover() {
         setInput("");
       } catch (error) {
         toast.error(error.message);
+        setLoading(false);
       }
-      setLoading(false);
+      
+    }
+  
+
+  const handleSearch = async (e) => {
+    if (e.key === "Enter") {
+     fetchUsers(input);
+     setInput("");
     }
   };
 
   useEffect(() => {
+    fetchUsers(); //page load hote hii sab users
     getToken().then((token) => {
       dispatch(fetchUser(token));
     });

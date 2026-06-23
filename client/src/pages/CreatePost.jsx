@@ -37,11 +37,11 @@ function CreatePost() {
       if(data.success){
          navigate('/')
       }else{
-        console.log(data.message)
+        // console.log(data.message)
         throw new Error(data.message)
       }
      } catch (error) {
-        console.log(error.message)
+        // console.log(error.message)
         throw new Error(error.message)
      }
      setLoading(false);

@@ -26,7 +26,7 @@ function Messages() {
               <img
                 src={user.profile_picture}
                 alt=""
-                className="rounded-full size-12 mx-auto"
+                className="rounded-full size-12 mx-auto object-cover"
               />
               <div className="flex-1">
                 <p className="font-medium text-slate-700">{user.full_name}</p>

@@ -100,16 +100,16 @@ export const updateUserData=async (req,res)=>{
 export const discoverUsers=async (req,res)=>{
   try {
      const {userId}=await req.auth();
-     const {input}=req.body;
+     const {input=""}=req.body;
 
-     const allUsers=await User.find({
+     const allUsers=input.trim()?await User.find({
        $or:[
         {username:new RegExp(input,'i')},
         {email:new RegExp(input,'i')},
         {full_name:new RegExp(input,'i')},
         {location:new RegExp(input,'i')},
        ]
-     })
+     }): await User.find({})
      const filteredUsers=allUsers.filter(user=>user._id!==userId)
      res.json({success:true,users:filteredUsers})
   } catch (error) {

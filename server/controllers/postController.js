@@ -103,3 +103,17 @@ export const getUserProfiles=async (req,res)=>{
     res.json({success:false,message:error.message})
   }
 }
+
+export const deletePost=async (req,res)=>{
+  try {
+   
+    const { postId } = req.params;
+
+    
+    await Post.findByIdAndDelete(postId);
+    res.json({success:true,message:"Post deleted successfully"})
+  } catch (error) {
+    console.log(error)
+    res.json({success:false,message:error.message})
+  }
+}

@@ -8,6 +8,7 @@ import { inngest } from "../inngest/index.js";
 
 
 export const addUserStory=async (req,res)=>{
+  console.log("add user story hit")
   try {
     const {userId}=req.auth();
     const {content,media_type,background_color}=req.body
@@ -65,3 +66,40 @@ export const getStories=async (req,res)=>{
      res.json({success:false,message:error.message})
   }
 }
+
+export const deleteStory = async (req, res) => {
+  try {
+    const { userId } = await req.auth();
+    const { storyId } = req.params;
+
+    const story = await Story.findById(storyId);
+
+    if (!story) {
+      return res.json({
+        success: false,
+        message: "Story not found",
+      });
+    }
+
+    if (story.user !== userId) {
+      return res.json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
+    await Story.findByIdAndDelete(storyId);
+
+    res.json({
+      success: true,
+      message: "Story deleted successfully",
+    });
+  } catch (error) {
+    console.log(error);
+
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};

@@ -1,4 +1,11 @@
-import { BadgeCheck, Heart, MessageCircle, Share2 } from "lucide-react";
+import {
+  BadgeCheck,
+  Heart,
+  MessageCircle,
+  MoreHorizontal,
+  Share2,
+  Trash2,
+} from "lucide-react";
 import React, { useState } from "react";
 import moment from "moment";
 import { dummyUserData } from "../assets/assets";
@@ -9,11 +16,13 @@ import api from "../api/axios";
 import toast from "react-hot-toast";
 
 function PostCard({ post }) {
+  const navigate = useNavigate();
   const postWithHashtags = post.content.replace(
     /(#\w+)/g,
     '<span class="text-indigo-600">$1</span>',
   );
   const [likes, setLikes] = useState(post.likes_count);
+  const [showMenu, setShowMenu] = useState(false);
   // const currentUser = dummyUserData;
   const currentUser = useSelector((state) => state.user.value);
   const { getToken } = useAuth();
@@ -21,8 +30,8 @@ function PostCard({ post }) {
     try {
       const { data } = await api.post(
         `/api/post/like`,
-        {postId:post._id },
-        {headers:{Authorization: `Bearer ${await getToken()}` } },
+        { postId: post._id },
+        { headers: { Authorization: `Bearer ${await getToken()}` } },
       );
       if (data.success) {
         toast.success(data.message);
@@ -40,29 +49,67 @@ function PostCard({ post }) {
       toast.error(error.message);
     }
   };
-  const navigate = useNavigate();
+
+  const handleDelete = async () => {
+    try {
+      const { data } = await api.delete(`/api/post/delete/${post._id}`, {
+        headers: { Authorization: `Bearer ${await getToken()}` },
+      });
+      if (data.success) {
+        toast.success("Post deleted");
+
+        //page refresh temporarily
+        window.location.reload();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(data.message);
+    }
+  };
 
   return (
     <div className="bg-white rounded-xl shadow p-4 space-y-4 w-full max-w-2xl">
       {/* userinfo */}
-      <div
-        onClick={() => navigate("/profile/" + post.user._id)}
-        className="inline-flex items-center gap-3 cursor-pointer"
-      >
-        <img
-          src={post.user.profile_picture}
-          alt=""
-          className="w-10 h-10 rounded-full shadow object-cover"
-        />
-        <div>
+      <div className="flex justify-between items-start">
+        <div
+          onClick={() => navigate("/profile/" + post.user._id)}
+          className="inline-flex items-center gap-3 cursor-pointer"
+        >
+          <img
+            src={post.user.profile_picture}
+            alt=""
+            className="w-10 h-10 rounded-full shadow object-cover"
+          />
           <div>
-            <span>{post.user.full_name}</span>
-            <BadgeCheck className="w-4 h-4 text-blue-500" />
-          </div>
-          <div className="text-gray-500 text-sm">
-            @{post.user.username}.{moment(post.createdAt).fromNow()}
+            <div>
+              <span>{post.user.full_name}</span>
+              <BadgeCheck className="w-4 h-4 text-blue-500" />
+            </div>
+            <div className="text-gray-500 text-sm">
+              @{post.user.username}.{moment(post.createdAt).fromNow()}
+            </div>
           </div>
         </div>
+        {currentUser?._id === post.user._id && (
+          <div className="relative">
+            <MoreHorizontal
+              onClick={() => setShowMenu(!showMenu)}
+              className="w-5 h-5 cursor-pointer text-gray-500"
+            />
+            {showMenu && (
+              <div className="absolute right-0 mt-2 bg-white border rounded-lg shadow-lg z-10">
+                <button
+                  onClick={handleDelete}
+                  className="flex items-center gap-2 px-4 py-2 text-red-500 hover:bg-gray-100"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  Delete
+                </button>
+              </div>
+            )}
+          </div>
+        )}
       </div>
       {/* Content  */}
       {post.content && (
@@ -86,7 +133,8 @@ function PostCard({ post }) {
       {/* Actions */}
       <div className="flex items-center gap-4 text-gray-600 text-sm pt-2 border-t border-gray-300">
         <div className="flex items-center gap-1">
-          <Heart onClick={handleLike}
+          <Heart
+            onClick={handleLike}
             className={`w-4 h-4 cursor-pointer ${likes.includes(currentUser._id) && "text-red-500 fill-red-500"}`}
           />
           <span>{likes.length}</span>
