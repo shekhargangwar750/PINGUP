@@ -5,12 +5,15 @@ import { useSelector } from "react-redux";
 import api from "../api/axios";
 import { getToken } from "@clerk/react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function CommentModal({ post, onClose, setCommentCount }) {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
 
   const currentUser = useSelector((state) => state.user.value);
+  // console.log(currentUser);
+  const navigate = useNavigate();
 
   const fetchComments = async () => {
     try {
@@ -38,6 +41,7 @@ function CommentModal({ post, onClose, setCommentCount }) {
           full_name: currentUser.full_name,
           username: currentUser.username,
           profile_picture: currentUser.profile_picture,
+          user_mongo_id: currentUser._id,
         },
         {
           headers: {
@@ -84,11 +88,21 @@ function CommentModal({ post, onClose, setCommentCount }) {
               <div key={item._id} className=" flex border-b py-3 gap-3">
                 <img
                   src={item.profile_picture}
-                  className="w-8 h-8 rounded-full object-cover"
+                  className="w-8 h-8 rounded-full object-cover cursor-pointer"
+                  onClick={() => {
+                    navigate(`/profile/${item.user}`);
+                  }}
                 />
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold">{item.full_name}</span>
+                    <span
+                      className="font-semibold cursor-pointer"
+                      onClick={() => {
+                        navigate(`/profile/${item.user}`);
+                      }}
+                    >
+                      {item.full_name}
+                    </span>
                     <span className="text-xs text-gray-500">
                       {moment(item.createdAt).fromNow()}
                     </span>
@@ -113,7 +127,7 @@ function CommentModal({ post, onClose, setCommentCount }) {
 
           <button
             onClick={handleSend}
-            className="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg"
+            className="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg cursor-pointer"
           >
             Send
           </button>

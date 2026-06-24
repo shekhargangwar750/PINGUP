@@ -55,6 +55,7 @@ function StoryModel({ setShowModal, fetchStories }) {
         setPreviewUrl(URL.createObjectURL(file));
         setText("");
         setMode("media");
+      
       }
     }
   };

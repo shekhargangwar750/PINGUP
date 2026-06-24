@@ -6,7 +6,7 @@ import Post from "../models/Post.js";
 export const addComment=async (req,res)=>{
   try {
     const {userId}=req.auth();
-    const {postId,text,full_name,username,profile_picture}=req.body;
+    const {postId,text,full_name,username,profile_picture,}=req.body;
 
     const comment=await Comment.create({
       post:postId,
@@ -14,7 +14,8 @@ export const addComment=async (req,res)=>{
       text,
       full_name,
       username,
-      profile_picture
+      profile_picture,
+     
     })
 
     await Post.findByIdAndUpdate(postId,{
@@ -22,6 +23,7 @@ export const addComment=async (req,res)=>{
     })
     res.json({success:true,comment});
   } catch (error) {
+    console.log(error);
     res.json({success:false,message:error.message});
   }
 }
