@@ -88,12 +88,12 @@ function StoryViewer({ viewStory, setViewStory }) {
   };
   return (
     <div
-      className="fixed inset-0 h-screen bg-black bg-opacity-90 z-110 flex items-center justify-center"
+      className="fixed inset-0 h-screen bg-linear-to-r from-cyan-500 to-blue-500 bg-opacity-90 z-110 flex items-center justify-center"
       style={{
         backgroundColor:
           viewStory.media_type === "text"
             ? viewStory.background_color
-            : "#000000",
+            : "bg-linear-to-b from-gray-900 to-black",
       }}
     >
       {/* Progress Bar */}
