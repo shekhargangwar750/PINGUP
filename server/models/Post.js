@@ -8,7 +8,11 @@ const postSchema=new mongoose.Schema({
    likes_count:[{type:String,ref:'User'}],
    comments_count:{
     type:Number,default:0
-   }
+   },
+   shares_count: {
+  type: Number,
+  default: 0
+}
 },{timestamps:true,minimize:false})
 
 

@@ -15,6 +15,7 @@ import { useAuth } from "@clerk/react";
 import api from "../api/axios";
 import toast from "react-hot-toast";
 import CommentModal from "./CommentModal";
+import ShareModal from "./ShareModal";
 
 function PostCard({ post }) {
   const navigate = useNavigate();
@@ -28,7 +29,9 @@ function PostCard({ post }) {
   // const currentUser = dummyUserData;
   const currentUser = useSelector((state) => state.user.value);
   const { getToken } = useAuth();
-  const [commentCount,setCommentCount]=useState(post.comments_count||0);
+  const [commentCount, setCommentCount] = useState(post.comments_count || 0);
+  const [openShare, setOpenShare] = useState(false);
+  const [shareCount, setShareCount] = useState(post.shares_count || 0);
   const handleLike = async () => {
     try {
       const { data } = await api.post(
@@ -151,14 +154,28 @@ function PostCard({ post }) {
             <span>{commentCount}</span>
           </div>
           <div className="flex items-center gap-1">
-            <Share2 className="w-4 h-4" />
-            <span>{7}</span>
+            <Share2
+              onClick={() => setOpenShare(true)}
+              className="w-4 h-4 cursor-pointer"
+            />
+
+            <span>{shareCount}</span>
           </div>
         </div>
       </div>
       {showComments && (
-        <CommentModal post={post} onClose={() => setShowComments(false)} setCommentCount={setCommentCount} />
+        <CommentModal
+          post={post}
+          onClose={() => setShowComments(false)}
+          setCommentCount={setCommentCount}
+        />
       )}
+      <ShareModal
+        open={openShare}
+        onClose={() => setOpenShare(false)}
+        postId={post._id}
+        onShared={() => setShareCount((prev) => prev + 1)}
+      />
     </>
   );
 }

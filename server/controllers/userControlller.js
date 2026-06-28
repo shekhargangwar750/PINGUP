@@ -262,3 +262,23 @@ export const acceptConnectionRequest=async (req,res)=>{
   }
 }
 
+//share icon functionality ke liye
+export const getFollowingUsers = async (req, res) => {
+  try {
+    const { userId } = await req.auth();
+
+    const user = await User.findById(userId)
+      .populate("following", "full_name username profile_picture");
+
+    res.json({
+      success: true,
+      following: user.following,
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};

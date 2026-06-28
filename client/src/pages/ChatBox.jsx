@@ -78,6 +78,8 @@ function ChatBox() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+
+
   return (
     user && (
       <div className="flex flex-col h-screen">
@@ -97,27 +99,47 @@ function ChatBox() {
           <div className="space-y-4 max-w-4xl mx-auto">
             {messages
               .toSorted((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
-              .map((message, index) => (
-                <div
-                  key={index}
-                  className={`flex flex-col ${message.to_user_id !== user._id ? "items-start" : "items-end"}`}
-                >
-                  <div
-                    className={`p-2 text-sm max-w-sm bg-white text-slate-700 rounded-lg shadow ${message.to_user_id !== user._id ? "rounded-bl-none" : "rounded-br-none"}`}
-                  >
-                    {/* {console.log(message.media_url)} */}
-                    {message.media_url && (
-                      <img
-                        src={message.media_url}
-                        alt=""
-                        className="w-auto max-w-37.5 max-h-50 rounded-lg  object-cover"
-                      />
-                    )}
+              .map((message, index) => {
+                const type = message.message_type || "text";
 
-                    <p>{message.text}</p>
+                return (
+                  <div
+                    key={index}
+                    className={`flex flex-col ${
+                      message.to_user_id !== user._id
+                        ? "items-start"
+                        : "items-end"
+                    }`}
+                  >
+                    <div className="p-2 text-sm max-w-sm bg-white text-slate-700 rounded-lg shadow">
+                      {/* TEXT */}
+                      {type === "text" && <p>{message.text}</p>}
+
+                      {/* IMAGE */}
+                      {type === "image" && message.media_url && (
+                        <img
+                          src={message.media_url}
+                          className="w-auto max-w-37.5 max-h-50 rounded-lg object-cover"
+                        />
+                      )}
+
+                      {/* POST */}
+                      {type === "post" && message.post_id?.image_urls && (
+                        <div className="border rounded-lg p-2 bg-gray-100 w-64">
+                          <img
+                            src={message.post_id?.image_urls?.[0]}
+                            className="rounded-lg mb-2"
+                          />
+                          <p className="text-xs text-gray-700">
+                            {message.post_id?.content}
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
+
             <div ref={messagesEndRef} />
           </div>
         </div>
