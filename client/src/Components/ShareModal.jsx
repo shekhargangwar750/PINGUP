@@ -103,7 +103,7 @@ function ShareModal({ open, onClose, postId, onShared }) {
                 </div>
                 <button
                   onClick={() => handleShare(user._id)}
-                  className="bg-indigo-600 text-white px-4 py-1.5 rounded-full hover:bg-indigo-700"
+                  className="bg-indigo-600 text-white px-4 py-1.5 rounded-full hover:bg-indigo-700 cursor-pointer"
                 >
                   Send
                 </button>
