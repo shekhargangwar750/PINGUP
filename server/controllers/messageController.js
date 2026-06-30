@@ -95,7 +95,15 @@ export const getChatMessages=async (req,res)=>{
         {from_user_id:userId,to_user_id},
         {from_user_id:to_user_id,to_user_id:userId}
       ]
-    }).sort({createdAt:-1})
+    }).populate("from_user_id")
+.populate({
+  path: "post_id",
+  populate: {
+    path: "user",
+  },
+}).sort({createdAt:-1})
+  console.log(message);
+
     // mark message as seen
     await Message.updateMany({from_user_id:to_user_id,to_user_id:userId},{seen:true})
 

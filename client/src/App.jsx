@@ -43,7 +43,7 @@ function App() {
       eventSource.onmessage = (event) => {
         const message = JSON.parse(event.data);
 
-        if (pathnameRef.current === "/messages/" + message.from_user_id._id) {
+        if (pathnameRef.current === ("/messages/" + message.from_user_id._id)) {
           dispatch(addMessages(message));
         } else {
           toast.custom((t) => <Notification t={t} message={message} />, {

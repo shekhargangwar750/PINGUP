@@ -78,8 +78,6 @@ function ChatBox() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-
-
   return (
     user && (
       <div className="flex flex-col h-screen">
@@ -101,7 +99,7 @@ function ChatBox() {
               .toSorted((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
               .map((message, index) => {
                 const type = message.message_type || "text";
-
+               
                 return (
                   <div
                     key={index}
