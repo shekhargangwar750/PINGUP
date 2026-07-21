@@ -11,7 +11,11 @@ const postSchema=new mongoose.Schema({
    },
    shares_count: {
   type: Number,
-  default: 0
+  default: 0,
+  isDefault: {
+    type: Boolean,
+    default: false
+}
 }
 },{timestamps:true,minimize:false})
 

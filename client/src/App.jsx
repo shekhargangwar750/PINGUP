@@ -24,6 +24,11 @@ function App() {
   const { pathname } = useLocation();
   const pathnameRef = useRef(pathname);
   const dispatch = useDispatch();
+
+ useEffect(() => {
+  pathnameRef.current = pathname;
+}, [pathname]);
+
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
