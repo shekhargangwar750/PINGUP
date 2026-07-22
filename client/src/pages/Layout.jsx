@@ -14,7 +14,7 @@ function Layout() {
   return user?(
     <div className="w-full flex h-screen">
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-      <div className="flex-1 bg-slate-50">
+      <div className="flex-1 h-screen overflow-hidden bg-slate-50">
         <Outlet />
       </div>
       {sidebarOpen ? (

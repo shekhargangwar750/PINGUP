@@ -8,7 +8,7 @@ function Messages() {
   const navigate = useNavigate();
    const {connections}=useSelector((state)=>state.connections)
   return (
-    <div className="min-h-screen relative bg-slate-50">
+    <div className="h-screen overflow-y-auto  relative bg-slate-50">
       <div className="max-w-6xl mx-auto p-6">
         {/* Title */}
         <div className="mb-8">
