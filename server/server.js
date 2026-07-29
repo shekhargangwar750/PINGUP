@@ -14,12 +14,7 @@ const app = express();
 await connectDB();
 
 app.use(express.json());
-app.use(
-  cors({
-    origin: "https://connectx-people.vercel.app",
-    credentials: true,
-  }),
-);
+app.use(cors());
 app.use(clerkMiddleware());
 
 app.get("/", (req, res) => {
