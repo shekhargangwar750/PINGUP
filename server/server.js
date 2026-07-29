@@ -13,6 +13,38 @@ import messageRouter from "./routes/messageRoutes.js";
 const app = express();
 await connectDB();
 
+app.disable("x-powered-by");
+app.set("trust proxy", 1);
+
+app.use((req, res, next) => {
+  const host = req.get("host") || "";
+  const isLocalHost = host.includes("localhost") || host.includes("127.0.0.1");
+
+  if (
+    process.env.NODE_ENV === "production" &&
+    !isLocalHost &&
+    !req.secure &&
+    req.get("x-forwarded-proto") !== "https"
+  ) {
+    return res.redirect(301, `https://${host}${req.originalUrl}`);
+  }
+
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Frame-Options", "DENY");
+  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  res.setHeader(
+    "Permissions-Policy",
+    "camera=(), microphone=(), geolocation=()",
+  );
+  res.setHeader(
+    "Strict-Transport-Security",
+    "max-age=31536000; includeSubDomains; preload",
+  );
+  res.setHeader("X-XSS-Protection", "1; mode=block");
+
+  next();
+});
+
 app.use(express.json());
 app.use(cors());
 app.use(clerkMiddleware());
