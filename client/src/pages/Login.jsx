@@ -17,7 +17,7 @@ function Login() {
         <img src={assets.Social} alt="" className="h-25 w-50 object-contain" />
         <div>
           <div className="flex items-center gap-3 mb-4 max-md:mt-10">
-            <img src={assets.group_users} alt="" className="h-8 md:h-10" />
+            <img src={assets.group_img2} alt="" className="h-20 md:h-10" />
             <div>
               <div className="flex">
                 {Array(5)
@@ -33,10 +33,10 @@ function Login() {
             </div>
           </div>
           <h1 className="text-3xl md:text-6xl md:pb-2 font-bold bg-linear-to-r from-indigo-950 to-indigo-800 bg-clip-text text-transparent">
-            More than just friends truly connect
+           Share your world and grow your network on SocialLite 
           </h1>
           <p className="text-xl md:text-3xl text-indigo-900 max-w-72 md:max-w-md">
-            connect with global community on ConnectX
+            Your community. Your conversations. All in one place ❤️
           </p>
         </div>
         <span className="md:h-10"></span>

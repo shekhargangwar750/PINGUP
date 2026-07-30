@@ -49,14 +49,13 @@ function Feed() {
         <div className="max-w-xs bg-white text-xs p-4 rounded-md inline-flex flex-col gap-2 shadow">
           <h3>Sponsered</h3>
           <img
-            src={assets.sponsored_img}
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIov4eC-uvF56p6m5ii5O-zPLclBge6-wLBwke3RLTTg&s=10"
             className="w-75 h-50 rounded-md"
             alt=""
           />
           <p className="text-slate-400">Email marketing</p>
           <p>
-            Supercharge your marketing with a powerful,easy-to-use platform
-            built for results.
+           Secure your family's future with trusted life insurance. Learn more.
           </p>
         </div>
         <RecentMessages />
