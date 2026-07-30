@@ -14,10 +14,9 @@ export const assets = {
   sample_cover,
   sample_profile,
   bgImage,
-
+  group_img2,
   sign,
   Social,
-  group_img2,
 };
 
 export const menuItemsData = [
