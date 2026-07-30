@@ -1,6 +1,6 @@
-# 🚀 PingUp - Full Stack Social Media Platform
+# 🚀 SocialLite - Full Stack Social Media Platform
 
-PingUp is a modern full-stack social media platform that enables users to connect, share posts, and interact with others through a clean and responsive interface. The application is built using the MERN stack and integrates modern services like Clerk for authentication, ImageKit for media storage, and Brevo for email communication.
+SocialLite is a modern full-stack social media platform that enables users to connect, share posts, and interact with others through a clean and responsive interface. The application is built using the MERN stack and integrates modern services like Clerk for authentication, ImageKit for media storage, and Brevo for email communication.
 
 ## ✨ Features
 
@@ -48,7 +48,7 @@ PingUp is a modern full-stack social media platform that enables users to connec
 ## 📂 Project Structure
 
 ```
-PingUp
+SocialLite
 │
 ├── client
 │   ├── src
@@ -77,12 +77,12 @@ PingUp
 
 ## 🔗 Live Demo
 
-👉
+👉  https://sociallite-join.vercel.app
 
 
 ## 📖 What I Learned
 
-While building PingUp, I gained hands-on experience with:
+While building SocialLite, I gained hands-on experience with:
 
 - Building scalable full-stack applications using the MERN stack
 - Implementing secure authentication using Clerk
