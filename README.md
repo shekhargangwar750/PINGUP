@@ -77,7 +77,7 @@ PingUp
 
 ## 🔗 Live Demo
 
-👉 https://ping-up-seven-alpha.vercel.app
+👉
 
 
 ## 📖 What I Learned
