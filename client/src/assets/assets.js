@@ -7,14 +7,14 @@ import sign from "./sign.png";
 import { Home, MessageCircle, Search, UserIcon, Users } from "lucide-react";
 
 import Social from "./Social.png";
-import group_img2 from "./group_img2.png";
+import group from "./group.png";
 
 export const assets = {
   logo,
   sample_cover,
   sample_profile,
   bgImage,
-  group_img2,
+  group,
   sign,
   Social,
 };
