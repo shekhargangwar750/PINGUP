@@ -98,13 +98,15 @@ function Connections() {
         {/* Counts */}
         <div className="mb-8 flex flex-wrap gap-6">
           {dataArray.map((item, index) => (
-            <div
+            <button
               key={index}
-              className="flex flex-col items-center justify-center gap-1 border h-20 w-40 border-gray-200 bg-white shadow rounded-md"
+              type="button"
+              onClick={() => setCurrentTab(item.label)}
+              className="flex flex-col items-center justify-center gap-1 border h-20 w-40 border-gray-200 bg-white shadow rounded-md cursor-pointer hover:bg-slate-50 transition-colors"
             >
               <b>{item.value.length}</b>
               <p className="text-slate-600">{item.label}</p>
-            </div>
+            </button>
           ))}
         </div>
 

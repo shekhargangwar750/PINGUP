@@ -1,24 +1,32 @@
-import express from 'express'
-import {upload} from '../config/multer.js'
-import { addPost, deletePost, getFeedPosts, likePost } from '../controllers/postController.js'
-import { protect } from '../middlewares/auth.js'
-import { addComment, getComments } from '../controllers/commentController.js'
+import express from "express";
+import { upload } from "../config/multer.js";
+import {
+  addPost,
+  deletePost,
+  getFeedPosts,
+  likePost,
+} from "../controllers/postController.js";
+import { protect } from "../middlewares/auth.js";
+import {
+  addComment,
+  deleteComment,
+  getComments,
+} from "../controllers/commentController.js";
 
-const postRouter=express.Router()
+const postRouter = express.Router();
 
+postRouter.post("/add", upload.array("images", 4), protect, addPost);
 
+postRouter.get("/feed", protect, getFeedPosts);
 
-postRouter.post('/add',upload.array('images',4),protect,addPost)
+postRouter.post("/like", protect, likePost);
 
-postRouter.get('/feed',protect,getFeedPosts)
+postRouter.delete("/delete/:postId", deletePost);
 
-postRouter.post('/like',protect,likePost)
+postRouter.post("/comment", protect, addComment);
 
-postRouter.delete("/delete/:postId",deletePost)
+postRouter.get("/comments/:postId", getComments);
 
-postRouter.post('/comment',protect,addComment);
+postRouter.delete("/comment/:id", protect, deleteComment);
 
-postRouter.get('/comments/:postId',getComments);
-
-
-export default postRouter
+export default postRouter;

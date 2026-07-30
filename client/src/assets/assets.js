@@ -7,6 +7,7 @@ import connectx from "./connectx.png";
 import sign from "./sign.png";
 import { Home, MessageCircle, Search, UserIcon, Users } from "lucide-react";
 import sponsored_img from "./sponsored_img.png";
+import Social from "./Social.png";
 
 export const assets = {
   logo,
@@ -17,6 +18,7 @@ export const assets = {
   sponsored_img,
   connectx,
   sign,
+  Social,
 };
 
 export const menuItemsData = [

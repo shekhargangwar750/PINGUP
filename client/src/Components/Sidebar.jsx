@@ -19,7 +19,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
       <div className="w-full">
         <img
           onClick={() => navigate("/")}
-          src={assets.connectx}
+          src={assets.Social}
           className="w-50 h-25 ml-5 my-2 object-contain cursor-pointer"
           alt=""
         />

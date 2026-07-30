@@ -10,6 +10,7 @@ import postRouter from "./routes/postRoutes.js";
 import storyRouter from "./routes/storyRoutes.js";
 import messageRouter from "./routes/messageRoutes.js";
 
+
 const app = express();
 await connectDB();
 
@@ -54,6 +55,8 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(cors());
 app.use(clerkMiddleware());
+
+
 
 app.get("/", (req, res) => {
   res.send("server is running");

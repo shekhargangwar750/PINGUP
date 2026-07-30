@@ -1,19 +1,21 @@
-import { X } from "lucide-react";
+import { MoreHorizontal, Trash2, X } from "lucide-react";
 import moment from "moment";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import api from "../api/axios";
-import { getToken } from "@clerk/react";
+import { useAuth } from "@clerk/react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function CommentModal({ post, onClose, setCommentCount }) {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
+  const [showMenu, setShowMenu] = useState(null);
 
   const currentUser = useSelector((state) => state.user.value);
   // console.log(currentUser);
   const navigate = useNavigate();
+  const { getToken } = useAuth();
 
   const fetchComments = async () => {
     try {
@@ -57,18 +59,26 @@ function CommentModal({ post, onClose, setCommentCount }) {
     } catch (error) {
       console.log(error);
     }
+  };
 
-    // const newComment = {
-    //   id: Date.now(),
-    //   text: comment,
-    //   username: currentUser.username,
-    //   profile: currentUser.profile_picture,
-    //   full_name:currentUser.full_name,
-    //   createdAt: new Date(),
+  const handleDelete = async (commentId) => {
+    try {
+      const { data } = await api.delete(`/api/post/comment/${commentId}`, {
+        headers: {
+          Authorization: `Bearer ${await getToken()}`,
+        },
+      });
 
-    // };
-    // setComments((prev) => [newComment, ...prev]);
-    // setComment("");
+      if (data.success) {
+        fetchComments();
+        setCommentCount((prev) => prev - 1);
+      }
+
+      console.log("Deleting:", commentId);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
@@ -94,20 +104,48 @@ function CommentModal({ post, onClose, setCommentCount }) {
                   }}
                 />
                 <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <span
-                      className="font-semibold cursor-pointer"
-                      onClick={() => {
-                        navigate(`/profile/${item.user}`);
-                      }}
-                    >
-                      {item.full_name}
-                    </span>
-                    <span className="text-xs text-gray-500">
-                      {moment(item.createdAt).fromNow()}
-                    </span>
+                  <div className="flex justify-between">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span
+                          className="font-semibold cursor-pointer"
+                          onClick={() => navigate(`/profile/${item.user}`)}
+                        >
+                          {item.full_name}
+                        </span>
+
+                        <span className="text-xs text-gray-500">
+                          {moment(item.createdAt).fromNow()}
+                        </span>
+                      </div>
+
+                      <p className="text-xs text-gray-500">@{item.username}</p>
+                    </div>
+
+                    {currentUser._id === item.user && (
+                      <div className="relative">
+                        <MoreHorizontal
+                          onClick={() =>
+                            setShowMenu(showMenu === item._id ? null : item._id)
+                          }
+                          className="w-4 h-4 cursor-pointer"
+                        />
+
+                        {showMenu === item._id && (
+                          <div className="absolute right-0 bg-white shadow rounded-lg border">
+                            <button
+                              onClick={() => handleDelete(item._id)}
+                              className="flex items-center gap-2 px-3 py-2 text-red-500 hover:bg-gray-100"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                              Delete
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
-                  <p className="text-xs text-gray-500">@{item.username}</p>
+
                   <p className="text-sm mt-1">{item.text}</p>
                 </div>
               </div>
