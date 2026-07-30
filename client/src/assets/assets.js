@@ -8,7 +8,7 @@ import sign from "./sign.png";
 import { Home, MessageCircle, Search, UserIcon, Users } from "lucide-react";
 import sponsored_img from "./sponsored_img.png";
 import Social from "./Social.png";
-import group_img2 from"./group_img2.png"
+import group_img2 from "./group_img2.png";
 
 export const assets = {
   logo,
@@ -17,10 +17,10 @@ export const assets = {
   bgImage,
   group_users,
   sponsored_img,
-  
+
   sign,
   Social,
-  group_img2
+  group_img2,
 };
 
 export const menuItemsData = [
