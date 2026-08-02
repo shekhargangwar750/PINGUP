@@ -22,6 +22,7 @@ SocialLite is a modern full-stack social media platform that enables users to co
 ## 🛠️ Tech Stack
 
 ### Frontend
+
 - React.js
 - Redux Toolkit
 - Tailwind CSS
@@ -32,6 +33,7 @@ SocialLite is a modern full-stack social media platform that enables users to co
 - Moment.js
 
 ### Backend
+
 - Node.js
 - Express.js
 - MongoDB
@@ -39,6 +41,7 @@ SocialLite is a modern full-stack social media platform that enables users to co
 - Multer
 
 ### Third-Party Services
+
 - Clerk Authentication
 - ImageKit
 - Brevo
@@ -77,8 +80,7 @@ SocialLite
 
 ## 🔗 Live Demo
 
-👉  https://sociallite-join.vercel.app
-
+👉 https://sociallite-join.vercel.app
 
 ## 📖 What I Learned
 
@@ -96,9 +98,9 @@ While building SocialLite, I gained hands-on experience with:
 - Responsive UI design using Tailwind CSS
 - Git and GitHub workflow
 
----
-
 ## 📸 Application Screenshots
+
+---
 
 <table align="center">
   <tr>
@@ -131,6 +133,7 @@ While building SocialLite, I gained hands-on experience with:
   </tr>
 </table>
 
+---
 
 ## 👨‍💻 Author
 
