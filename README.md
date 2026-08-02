@@ -98,6 +98,39 @@ While building SocialLite, I gained hands-on experience with:
 
 ---
 
+## 📸 Application Screenshots
+
+<table align="center">
+  <tr>
+    <td align="center">
+      <strong>🏠 Feed</strong><br><br>
+      <img src="./screenshots/feed.png" alt="Feed Page" width="450"/>
+    </td>
+    <td align="center">
+      <strong>💬 Messages</strong><br><br>
+      <img src="./screenshots/messages.png" alt="Messages Page" width="450"/>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center">
+      <strong>🔍 Discover</strong><br><br>
+      <img src="./screenshots/discover.png" alt="Discover Page" width="450"/>
+    </td>
+    <td align="center">
+      <strong>🤝 Connections</strong><br><br>
+      <img src="./screenshots/connections.png" alt="Connections Page" width="450"/>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" align="center">
+      <strong>👤 User Profile</strong><br><br>
+      <img src="./screenshots/profile.png" alt="Profile Page" width="550"/>
+    </td>
+  </tr>
+</table>
+
 
 ## 👨‍💻 Author
 
