@@ -139,7 +139,7 @@ While building SocialLite, I gained hands-on experience with:
 
 **Shekhar Gangwar**
 
-LinkedIn:linkedin.com/in/shekhar-gangwar-b31908339
+LinkedIn: https://www.linkedin.com/in/shekhar-gangwar-b31908339
 
 ---
 
